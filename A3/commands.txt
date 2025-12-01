@@ -1,0 +1,48 @@
+module load gcc/12.1.0
+module load cmake/3.26.3
+module load cuda/12.2.2
+
+salloc -A uppmax2025-2-338 -N 1 -M snowy -t 1:0:00
+salloc -A uppmax2025-2-338 -N 1 -M snowy --gres=gpu:1 --gpus-per-node=1 -t 1:0:00
+
+
+salloc -A uppmax2025-2-338 -N 1 -M pelle -t 1:0:00
+salloc -A uppmax2025-2-338 -N 1 -M pelle --gres=gpu:1 --gpus-per-node=1 -t 1:0:00
+
+sbatch ./run_exercise_cpu.sh --res=uppmax2025-2-338_1
+sbatch ./run_exercise_gpu.sh --res=uppmax2025-2-338_1
+jobinfo -M snowy -u abhi0911
+
+FOR RUNNING AFTER CONFIG:   
+# CPU version
+mkdir -p build_cpu
+cd build_cpu
+cmake -B . -S .. -DCMAKE_PREFIX_PATH=~/Kokkos2025/install_cpu
+cmake --build .
+
+cmake -DKokkos_ENABLE_OPENMP=ON -DKokkos_ENABLE_SERIAL=ON -DKokkos_ENABLE_CUDA=OFF ..
+make -j8
+
+
+# GPU version
+mkdir -p build_gpu
+cd build_gpu
+cmake -B . -S .. -DCMAKE_PREFIX_PATH=~/Kokkos2025/install_gpu
+cmake --build .
+
+# CPU run
+export OMP_NUM_THREADS=16
+./build_cpu/element_matrix_kokkos -N 1000
+
+# GPU run
+./build_gpu/element_matrix_kokkos -N 1000
+
+
+# GPU build
+mkdir -p build_gpu
+cd build_gpu
+cmake ..
+make
+
+# The executable will be: build_gpu/fed
+./fed -N 1000

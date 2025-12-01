@@ -1,0 +1,31 @@
+./fed -N 10000
+Kokkos::OpenMP::initialize WARNING: OMP_PROC_BIND environment variable not set
+  In general, for best performance with OpenMP 4.0 or better set OMP_PROC_BIND=spread and OMP_PLACES=threads
+  For best performance with OpenMP 3.1 set OMP_PROC_BIND=true
+  For unit testing set OMP_PROC_BIND=false
+
+MPI detected: For OpenMP binding to work as intended, MPI ranks must be bound to exclusive CPU sets.
+
+Running benchmark with 10000 elements
+
+--- Benchmark Results for double, LayoutLeft ---
+N = 10000 elements
+H->D Transfer Time: 0.000323 s
+Computation Time:   0.000706 s
+D->H Transfer Time: 0.000486 s
+M Elements/s:     14.166915
+GFlop/s:          0.963350
+GB/s (Comp Est.): 2.833383
+GB/s (Transfer):  2.471366
+-------------------------------------------
+
+--- Benchmark Results for float, LayoutRight ---
+N = 10000 elements
+H->D Transfer Time: 0.000190 s
+Computation Time:   0.000084 s
+D->H Transfer Time: 0.000239 s
+M Elements/s:     118.557862
+GFlop/s:          8.061935
+GB/s (Comp Est.): 11.855786
+GB/s (Transfer):  2.327535
+-------------------------------------------

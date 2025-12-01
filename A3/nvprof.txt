@@ -1,0 +1,51 @@
+==41106== NVPROF is profiling process 41106, command: ./fed -N 4000000
+Kokkos::OpenMP::initialize WARNING: OMP_PROC_BIND environment variable not set
+  In general, for best performance with OpenMP 4.0 or better set OMP_PROC_BIND=spread and OMP_PLACES=threads
+  For best performance with OpenMP 3.1 set OMP_PROC_BIND=true
+  For unit testing set OMP_PROC_BIND=false
+
+MPI detected: For OpenMP binding to work as intended, MPI ranks must be bound to exclusive CPU sets.
+
+N_elements, M Elements/s, GFlop/s, GB/s(Comp), GB/s(H->D), GB/s(D->H)
+4000000, 1212.862161, 83.687489, 121.286216, 3.457078, 3.664212
+==41106== Profiling application: ./fed -N 4000000
+==41106== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   60.62%  69.470ms         2  34.735ms  1.7270us  69.469ms  [CUDA memcpy DtoH]
+                   36.04%  41.302ms         8  5.1628ms     640ns  41.296ms  [CUDA memcpy HtoD]
+                    1.78%  2.0410ms         1  2.0410ms  2.0410ms  2.0410ms  _ZN6Kokkos4Impl33cuda_parallel_launch_local_memoryINS0_11ParallelForIZ13Run_BenchmarkIfNS_10LayoutLeftEEviEUliE_NS_11RangePolicyIJNS_4CudaEEEES7_EEEEvT_
+                    1.52%  1.7444ms         4  436.10us  2.8160us  1.1211ms  [CUDA memset]
+                    0.04%  45.152us         1  45.152us  45.152us  45.152us  desul::_GLOBAL__N__8dc3fe51_19_Lock_Array_CUDA_cpp_4d2bf3a0::init_lock_arrays_cuda_kernel(void)
+                    0.00%  2.8160us         1  2.8160us  2.8160us  2.8160us  Kokkos::Impl::_GLOBAL__N__fcabf7d2_24_Kokkos_Cuda_Instance_cpp_f3693ba3::query_cuda_kernel_arch(int*)
+      API calls:   63.15%  220.00ms        40  5.5001ms     702ns  219.90ms  cudaSetDevice
+                   32.00%  111.47ms         4  27.868ms  29.410us  69.800ms  cudaMemcpy
+                    0.95%  3.3183ms         7  474.04us  5.4750us  2.2417ms  cudaFree
+                    0.67%  2.3170ms       114  20.324us     232ns  1.1636ms  cuDeviceGetAttribute
+                    0.63%  2.2030ms         1  2.2030ms  2.2030ms  2.2030ms  cudaGetDeviceProperties
+                    0.62%  2.1551ms        13  165.78us  1.8220us  2.0312ms  cudaDeviceSynchronize
+                    0.50%  1.7581ms         4  439.52us  4.8680us  1.1230ms  cudaStreamSynchronize
+                    0.38%  1.3332ms         2  666.59us  6.8680us  1.3263ms  cudaHostAlloc
+                    0.32%  1.1278ms         1  1.1278ms  1.1278ms  1.1278ms  cudaFuncGetAttributes
+                    0.26%  891.97us         7  127.42us  6.2660us  385.26us  cudaMalloc
+                    0.18%  621.65us         3  207.22us  7.1910us  600.49us  cudaFreeHost
+                    0.17%  577.26us         3  192.42us  24.829us  512.27us  cudaLaunchKernel
+                    0.06%  216.97us         4  54.243us  8.4850us  171.76us  cudaMemcpyToSymbol
+                    0.03%  96.434us         2  48.217us  41.462us  54.972us  cudaStreamCreate
+                    0.02%  54.989us         2  27.494us  14.687us  40.302us  cudaMemsetAsync
+                    0.02%  52.455us         2  26.227us  14.870us  37.585us  cudaMemset
+                    0.01%  51.977us         2  25.988us  10.913us  41.064us  cudaMemcpyAsync
+                    0.01%  27.376us         2  13.688us  10.106us  17.270us  cudaStreamDestroy
+                    0.01%  17.623us         1  17.623us  17.623us  17.623us  cuDeviceGetName
+                    0.00%  15.334us         1  15.334us  15.334us  15.334us  cudaMallocHost
+                    0.00%  13.338us         1  13.338us  13.338us  13.338us  cuDeviceGetPCIBusId
+                    0.00%  11.996us         1  11.996us  11.996us  11.996us  cudaEventCreateWithFlags
+                    0.00%  8.0640us         1  8.0640us  8.0640us  8.0640us  cudaEventDestroy
+                    0.00%  3.6990us         2  1.8490us     416ns  3.2830us  cudaGetDeviceCount
+                    0.00%  2.4900us         1  2.4900us  2.4900us  2.4900us  cuDeviceGetUuid
+                    0.00%  2.1370us         3     712ns     369ns  1.3730us  cuDeviceGetCount
+                    0.00%  1.1010us         2     550ns     266ns     835ns  cuDeviceGet
+                    0.00%     982ns         1     982ns     982ns     982ns  cuStreamGetCtx
+                    0.00%     847ns         1     847ns     847ns     847ns  cuDeviceTotalMem
+                    0.00%     775ns         1     775ns     775ns     775ns  cuModuleGetLoadingMode
+                    0.00%     567ns         1     567ns     567ns     567ns  cuCtxPushCurrent
+                    0.00%     471ns         1     471ns     471ns     471ns  cuCtxGetDevice
